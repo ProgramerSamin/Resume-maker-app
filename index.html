@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biodata Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+    .container {
+      width: 80%;
+      margin: auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      font-weight: bold;
+    }
+    .form-section {
+      margin-bottom: 20px;
+    }
+    .biodata {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 5px;
+      text-align: left;
+    }
+    #biodata-frame {
+      display: none;
+    }
+    .bold {
+      font-weight: bold;
+    }
+    .photo-frame {
+      width: 120px;
+      height: 150px;
+      border: 1px solid #000;
+      margin-top: 10px;
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Biodata Generator</h1>
+    <form id="biodata-form">
+      <div class="form-section">
+        <h2>Personal Information</h2>
+        <label>Full Name: <input type="text" id="name"></label><br>
+        <label>Date of Birth: <input type="date" id="dob"></label><br>
+        <label>Marriage Status: <input type="text" id="marriage-status"></label><br>
+        <label>Citizenship: <input type="text" id="citizenship"></label><br>
+        <label>Gender: <input type="text" id="gender"></label><br>
+        <label>Phone Number: <input type="text" id="phone"></label><br>
+        <label>Email: <input type="email" id="email"></label><br>
+        <label>Photo: <input type="file" id="photo" accept="image/*" onchange="previewPhoto()"></label><br>
+      </div>
+      <div class="form-section">
+        <h2>Educational Background</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Board/University</th>
+              <th>Passing Year</th>
+              <th>Percentage</th>
+            </tr>
+          </thead>
+          <tbody id="education-rows">
+            <tr>
+              <td><input type="text" class="course"></td>
+              <td><input type="text" class="board"></td>
+              <td><input type="text" class="year"></td>
+              <td><input type="text" class="percentage"></td>
+            </tr>
+            <tr>
+              <td><input type="text" class="course"></td>
+              <td><input type="text" class="board"></td>
+              <td><input type="text" class="year"></td>
+              <td><input type="text" class="percentage"></td>
+            </tr>
+            <tr>
+              <td><input type="text" class="course"></td>
+              <td><input type="text" class="board"></td>
+              <td><input type="text" class="year"></td>
+              <td><input type="text" class="percentage"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="form-section">
+        <label>Additional Certificates: <input type="text" id="certificates"></label><br>
+      </div>
+      <div class="form-section">
+        <h2>Work Experience</h2>
+        <label>Skills: <input type="text" id="skills"></label><br>
+        <label>Experience (in years): <input type="number" id="experience"></label><br>
+      </div>
+      <button type="button" onclick="generateBiodata()">Generate Biodata</button>
+      <button type="button" onclick="downloadBiodata()">Download Biodata</button>
+    </form>
+    <div id="biodata-frame" class="biodata">
+      <h1>Biodata</h1>
+      <div class="photo-frame" id="photo-preview"></div>
+      <h2>Personal Information</h2>
+      <p>
+        <span class="bold">Full Name:</span> <span id="display-name"></span>
+      </p>
+      <p>
+        <span class="bold">Date of Birth:</span> <span id="display-dob"></span>
+      </p>
+      <p>
+        <span class="bold">Marriage Status:</span> <span id="display-marriage-status"></span>
+      </p>
+      <p>
+        <span class="bold">Citizenship:</span> <span id="display-citizenship"></span>
+      </p>
+      <p>
+        <span class="bold">Gender:</span> <span id="display-gender"></span>
+      </p>
+      <p>
+        <span class="bold">Phone Number:</span> <span id="display-phone"></span>
+      </p>
+      <p>
+        <span class="bold">Email:</span> <span id="display-email"></span>
+      </p>
+      <h2>Educational Background</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Board/University</th>
+            <th>Passing Year</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody id="display-education"></tbody>
+      </table>
+      <p>
+        <span class="bold">Additional Certificates:</span> <span id="display-certificates"></span>
+      </p>
+      <h2>Work Experience</h2>
+      <p>
+        <span class="bold">Skills:</span> <span id="display-skills"></span>
+      </p>
+      <p>
+        <span class="bold">Experience:</span> <span id="display-experience"></span> years
+      </p>
+      <p>
+        <i>I hereby confirm all the information given is true.</i>
+      </p>
+      <p>
+        <b>Signature of Applicant</b>
+      </p>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    function generateBiodata() {
+      document.getElementById('biodata-frame').style.display = 'block';
+      document.getElementById('display-name').textContent = document.getElementById('name').value;
+      document.getElementById('display-dob').textContent = document.getElementById('dob').value;
+      document.getElementById('display-marriage-status').textContent = document.getElementById('marriage-status').value;
+      document.getElementById('display-citizenship').textContent = document.getElementById('citizenship').value;
+      document.getElementById('display-gender').textContent = document.getElementById('gender').value;
+      document.getElementById('display-phone').textContent = document.getElementById('phone').value;
+      document.getElementById('display-email').textContent = document.getElementById('email').value;
+
+      const educationRows = document.querySelectorAll('#education-rows tr');
+      const displayEducation = document.getElementById('display-education');
+      displayEducation.innerHTML = '';
+      educationRows.forEach(row => {
+        const course = row.querySelector('.course').value;
+        const board = row.querySelector('.board').value;
+        const year = row.querySelector('.year').value;
+        const percentage = row.querySelector('.percentage').value;
+        if (course || board || year || percentage) {
+          displayEducation.innerHTML += `<tr>
+          <td>${course}</td>
+          <td>${board}</td>
+          <td>${year}</td>
+          <td>${percentage}</td>
+          </tr>`;
+        }
+      });
+
+      document.getElementById('display-certificates').textContent = document.getElementById('certificates').value;
+      document.getElementById('display-skills').textContent = document.getElementById('skills').value;
+      document.getElementById('display-experience').textContent = document.getElementById('experience').value;
+    }
+    function previewPhoto() {
+      const photoInput = document.getElementById('photo');
+      const photoPreview = document.getElementById('photo-preview');
+      const file = photoInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          photoPreview.style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function downloadBiodata() {
+      const biodataFrame = document.getElementById('biodata-frame');
+      html2canvas(biodataFrame, {
+        scale: 2
+      }).then((canvas) => {
+        const link = document.createElement('a');
+        link.download = 'Biodata.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
