@@ -11,6 +11,15 @@
       padding: 0;
       background-color: #f7f7f7;
     }
+    .ok{
+      display: flex;
+      gap: 0px;
+     justify-content: center;
+     align-content: center;
+     align-items: center;
+     text-align: center;
+     
+    }
     .container {
       width: 80%;
       margin: auto;
@@ -52,8 +61,16 @@
       height: 150px;
       border: 1px solid #000;
       margin-top: 10px;
+      margin-left: 80px;
       background-size: cover;
       background-position: center;
+    }
+    .op{
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    h1{
+      font-size: 4rem;
     }
   </style>
 </head>
@@ -117,9 +134,14 @@
       <button type="button" onclick="downloadBiodata()">Download Biodata</button>
     </form>
     <div id="biodata-frame" class="biodata">
-      <h1>Biodata</h1>
-      <div class="photo-frame" id="photo-preview"></div>
-      <h2>Personal Information</h2>
+          <h1>Biodata</h1>
+          
+      <div class="ok">
+      <h2 class="op">Personal Information</h2>
+     <div class="photo-frame" id="photo-preview"></div>
+     </div>
+  
+       
       <p>
         <span class="bold">Full Name:</span> <span id="display-name"></span>
       </p>
